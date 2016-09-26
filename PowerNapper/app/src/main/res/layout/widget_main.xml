@@ -18,6 +18,14 @@
         android:textColor="@android:color/black"/>
 
 
+    <LinearLayout
+        android:id="@+id/view_container"
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+        <!-- New views will be added here at runtime -->
+    </LinearLayout>
+
 
 
     <LinearLayout

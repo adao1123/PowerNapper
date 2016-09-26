@@ -42,6 +42,12 @@ public class WidgetProvider extends AppWidgetProvider {
             PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
                     0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
+            RemoteViews newView = new RemoteViews(context.getPackageName(), R.layout.widget_row_layout);
+            newView.setTextViewText(R.id.textUser, "1234");
+            remoteViews.addView(remoteViews.getLayoutId(), newView);
+
+            remoteViews.addView(R.id.view_container, newView);
+
 
             PendingIntent quarterPending = PendingIntent.getActivity(context, 1, getAlarmIntent(0,15), PendingIntent.FLAG_CANCEL_CURRENT);
             PendingIntent halfPending = PendingIntent.getActivity(context, 2, getAlarmIntent(0,30), PendingIntent.FLAG_CANCEL_CURRENT);
