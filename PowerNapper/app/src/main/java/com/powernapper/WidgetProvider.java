@@ -53,16 +53,7 @@ public class WidgetProvider extends AppWidgetProvider {
                     0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
 
-            if(widgetExpanded == false){
-                widgetExpanded = true;
-                RemoteViews newView = new RemoteViews(context.getPackageName(), R.layout.widget_row_layout);
-                newView.setTextViewText(R.id.textUser, "1234");
-                remoteViews.addView(remoteViews.getLayoutId(), newView);
 
-                remoteViews.addView(R.id.view_container, newView);
-            }else{
-                widgetExpanded = false;
-            }
 
             remoteViews.setOnClickPendingIntent(R.id.updateWidgetID, getPendingSelfIntent(context, MyOnClick));
 
@@ -95,7 +86,20 @@ public class WidgetProvider extends AppWidgetProvider {
 
             remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_main);
             alarmWidget = new ComponentName(context, WidgetProvider.class);
-            remoteViews.setTextViewText(R.id.textView, "KLSDFJLJ");
+
+            if(widgetExpanded == false){
+                widgetExpanded = true;
+                RemoteViews newView = new RemoteViews(context.getPackageName(), R.layout.widget_row_layout);
+                newView.setTextViewText(R.id.textUser, "1234");
+                remoteViews.addView(remoteViews.getLayoutId(), newView);
+                remoteViews.addView(R.id.view_container, newView);
+
+
+                remoteViews.setTextViewText(R.id.textView, "KLSDFJLJ");
+            }else{
+                widgetExpanded = false;
+            }
+
             appWidgetManager.updateAppWidget(alarmWidget, remoteViews);
 
             Log.d(TAG, "CLICK RECEIVED");
