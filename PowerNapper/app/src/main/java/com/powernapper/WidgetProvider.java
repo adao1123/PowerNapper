@@ -88,6 +88,15 @@ public class WidgetProvider extends AppWidgetProvider {
         super.onReceive(context, intent);
         if(MyOnClick.equals(intent.getAction())){
 
+            AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
+
+            RemoteViews remoteViews;
+            ComponentName alarmWidget;
+
+            remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_main);
+            alarmWidget = new ComponentName(context, WidgetProvider.class);
+            remoteViews.setTextViewText(R.id.textView, "KLSDFJLJ");
+            appWidgetManager.updateAppWidget(alarmWidget, remoteViews);
 
             Log.d(TAG, "CLICK RECEIVED");
         }
