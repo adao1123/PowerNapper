@@ -3,6 +3,7 @@ package com.powernapper;
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.provider.AlarmClock;
@@ -21,12 +22,21 @@ import java.util.Random;
 public class WidgetProvider extends AppWidgetProvider {
 
     private static final String TAG = "Widget Provider";
+    static boolean widgetExpanded = false;
+    private static final String MyOnClick = "myOnClickTag";
+
+    protected PendingIntent getPendingSelfIntent(Context context, String action){
+        Intent intent = new Intent(context, getClass());
+        intent.setAction(action);
+        return PendingIntent.getBroadcast(context, 0, intent, 0);
+    }
 
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         super.onUpdate(context, appWidgetManager, appWidgetIds);
 
         final int count = appWidgetIds.length;
+
 
         for (int i = 0; i < count; i++) {
             int widgetId = appWidgetIds[i];
@@ -42,11 +52,19 @@ public class WidgetProvider extends AppWidgetProvider {
             PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
                     0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
-            RemoteViews newView = new RemoteViews(context.getPackageName(), R.layout.widget_row_layout);
-            newView.setTextViewText(R.id.textUser, "1234");
-            remoteViews.addView(remoteViews.getLayoutId(), newView);
 
-            remoteViews.addView(R.id.view_container, newView);
+            if(widgetExpanded == false){
+                widgetExpanded = true;
+                RemoteViews newView = new RemoteViews(context.getPackageName(), R.layout.widget_row_layout);
+                newView.setTextViewText(R.id.textUser, "1234");
+                remoteViews.addView(remoteViews.getLayoutId(), newView);
+
+                remoteViews.addView(R.id.view_container, newView);
+            }else{
+                widgetExpanded = false;
+            }
+
+            remoteViews.setOnClickPendingIntent(R.id.updateWidgetID, getPendingSelfIntent(context, MyOnClick));
 
 
             PendingIntent quarterPending = PendingIntent.getActivity(context, 1, getAlarmIntent(0,15), PendingIntent.FLAG_CANCEL_CURRENT);
@@ -54,7 +72,7 @@ public class WidgetProvider extends AppWidgetProvider {
             PendingIntent onePending = PendingIntent.getActivity(context, 3, getAlarmIntent(1,0), PendingIntent.FLAG_CANCEL_CURRENT);
             PendingIntent twoPending = PendingIntent.getActivity(context, 4, getAlarmIntent(2,0), PendingIntent.FLAG_CANCEL_CURRENT);
 
-            remoteViews.setOnClickPendingIntent(R.id.updateWidgetID, pendingIntent);
+//            remoteViews.setOnClickPendingIntent(R.id.updateWidgetID, pendingIntent);
             remoteViews.setOnClickPendingIntent(R.id.quarterWidgetID, quarterPending);
             remoteViews.setOnClickPendingIntent(R.id.halfWidgetID, halfPending);
             remoteViews.setOnClickPendingIntent(R.id.oneWidgetID, onePending);
@@ -62,6 +80,17 @@ public class WidgetProvider extends AppWidgetProvider {
             appWidgetManager.updateAppWidget(widgetId, remoteViews);
         }
 
+    }
+
+
+    @Override
+    public void onReceive(Context context, Intent intent) {
+        super.onReceive(context, intent);
+        if(MyOnClick.equals(intent.getAction())){
+
+
+            Log.d(TAG, "CLICK RECEIVED");
+        }
     }
 
     private Intent getAlarmIntent(int hours, int minutes){
