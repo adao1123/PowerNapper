@@ -12,6 +12,7 @@ import android.widget.Toast;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Random;
 
 /**
  * Created by adao1 on 9/25/2016.
@@ -24,26 +25,42 @@ public class WidgetProvider extends AppWidgetProvider {
     @Override
     public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
         super.onUpdate(context, appWidgetManager, appWidgetIds);
-        for (int i = 0; i < appWidgetIds.length; i++) {
-            int currentWidgetId = appWidgetIds[i];
-            Log.i(TAG, "onUpdate: ");
-            PendingIntent halfPending = PendingIntent.getActivity(context, 0, getAlarmIntent(0,30), 0);
-            PendingIntent quarterPending = PendingIntent.getActivity(context, 0, getAlarmIntent(0,15), 0);
-            PendingIntent onePending = PendingIntent.getActivity(context, 0, getAlarmIntent(1,0), 0);
-            PendingIntent twoPending = PendingIntent.getActivity(context, 0, getAlarmIntent(2,0), 0);
 
-            RemoteViews views = new RemoteViews(context.getPackageName(), R.layout.widget_main);
-            views.setOnClickPendingIntent(R.id.quarterWidgetID, quarterPending);
-            views.setOnClickPendingIntent(R.id.halfWidgetID, halfPending);
-            views.setOnClickPendingIntent(R.id.oneWidgetID, onePending);
-            views.setOnClickPendingIntent(R.id.twoWidgetID, twoPending);
-            appWidgetManager.updateAppWidget(currentWidgetId, views);
-            Toast.makeText(context, "widget added", Toast.LENGTH_SHORT).show();
+        final int count = appWidgetIds.length;
+
+        for (int i = 0; i < count; i++) {
+            int widgetId = appWidgetIds[i];
+            String number = String.format("%03d", (new Random().nextInt(900) + 100));
+
+            RemoteViews remoteViews = new RemoteViews(context.getPackageName(),
+                    R.layout.widget_main);
+            remoteViews.setTextViewText(R.id.textView, String.valueOf(getTime()[0])+":"+String.valueOf(getTime()[1])+":"+String.valueOf(getTime()[2]));
+
+            Intent intent = new Intent(context, WidgetProvider.class);
+            intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
+                    0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+
+
+            PendingIntent quarterPending = PendingIntent.getActivity(context, 1, getAlarmIntent(0,15), PendingIntent.FLAG_CANCEL_CURRENT);
+            PendingIntent halfPending = PendingIntent.getActivity(context, 2, getAlarmIntent(0,30), PendingIntent.FLAG_CANCEL_CURRENT);
+            PendingIntent onePending = PendingIntent.getActivity(context, 3, getAlarmIntent(1,0), PendingIntent.FLAG_CANCEL_CURRENT);
+            PendingIntent twoPending = PendingIntent.getActivity(context, 4, getAlarmIntent(2,0), PendingIntent.FLAG_CANCEL_CURRENT);
+
+            remoteViews.setOnClickPendingIntent(R.id.updateWidgetID, pendingIntent);
+            remoteViews.setOnClickPendingIntent(R.id.quarterWidgetID, quarterPending);
+            remoteViews.setOnClickPendingIntent(R.id.halfWidgetID, halfPending);
+            remoteViews.setOnClickPendingIntent(R.id.oneWidgetID, onePending);
+            remoteViews.setOnClickPendingIntent(R.id.twoWidgetID, twoPending);
+            appWidgetManager.updateAppWidget(widgetId, remoteViews);
         }
+
     }
 
     private Intent getAlarmIntent(int hours, int minutes){
         Intent alarmIntent = new Intent(AlarmClock.ACTION_SET_ALARM);
+//        alarmIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
         alarmIntent.putExtra(AlarmClock.EXTRA_HOUR,getAlarmTime(hours,minutes)[0]);
         alarmIntent.putExtra(AlarmClock.EXTRA_MINUTES,getAlarmTime(hours,minutes)[1]);
         alarmIntent.putExtra(AlarmClock.EXTRA_SKIP_UI,true);
