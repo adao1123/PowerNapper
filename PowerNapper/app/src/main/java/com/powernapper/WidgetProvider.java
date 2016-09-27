@@ -37,27 +37,22 @@ public class WidgetProvider extends AppWidgetProvider {
 
         final int count = appWidgetIds.length;
 
-        RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_main);
+
 
         for (int i = 0; i < count; i++) {
             int widgetId = appWidgetIds[i];
-
-
-
-            String number = String.format("%03d", (new Random().nextInt(900) + 100));
+            RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_main);
             remoteViews.setTextViewText(R.id.textView, String.valueOf(getTime()[0])+":"+String.valueOf(getTime()[1])+":"+String.valueOf(getTime()[2]));
 
+            // --- Update Widget
+            Intent updateIntent = new Intent(context, WidgetProvider.class);
+            updateIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+            updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
+            PendingIntent updatePending = PendingIntent.getBroadcast(context,
+                    10, updateIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            remoteViews.setOnClickPendingIntent(R.id.updateWidgetID, updatePending);
 
-            // --- Update Widget with new time
-//            Intent intent = new Intent(context, WidgetProvider.class);
-//            intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-//            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
-//            PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
-//                    0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
-//            remoteViews.setOnClickPendingIntent(R.id.updateWidgetID, pendingIntent);
-
-
-
+            // ClickListener on widget to expand
             remoteViews.setOnClickPendingIntent(R.id.updateWidgetID, getPendingSelfIntent(context, MyOnClick));
             appWidgetManager.updateAppWidget(widgetId, remoteViews);
         }
@@ -68,6 +63,7 @@ public class WidgetProvider extends AppWidgetProvider {
     @Override
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
+
         if(MyOnClick.equals(intent.getAction())){
 
             AppWidgetManager appWidgetManager = AppWidgetManager.getInstance(context);
@@ -86,8 +82,6 @@ public class WidgetProvider extends AppWidgetProvider {
                 remoteViews.addView(R.id.view_container, newView);
 
 
-                remoteViews.setTextViewText(R.id.textView, "KLSDFJLJ");
-
 
                 PendingIntent quarterPending = PendingIntent.getActivity(context, 1, getAlarmIntent(0,15), PendingIntent.FLAG_CANCEL_CURRENT);
                 PendingIntent halfPending = PendingIntent.getActivity(context, 2, getAlarmIntent(0,30), PendingIntent.FLAG_CANCEL_CURRENT);
@@ -100,6 +94,8 @@ public class WidgetProvider extends AppWidgetProvider {
                 remoteViews.setOnClickPendingIntent(R.id.oneWidgetID, onePending);
                 remoteViews.setOnClickPendingIntent(R.id.twoWidgetID, twoPending);
 
+                remoteViews.setTextViewText(R.id.textView, String.valueOf(getTime()[0])+":"+String.valueOf(getTime()[1])+":"+String.valueOf(getTime()[2]));
+                AppWidgetManager.getInstance( context ).updateAppWidget( alarmWidget, remoteViews );
 
 
             }else{
@@ -108,7 +104,6 @@ public class WidgetProvider extends AppWidgetProvider {
 
             appWidgetManager.updateAppWidget(alarmWidget, remoteViews);
 
-            Log.d(TAG, "CLICK RECEIVED");
         }
     }
 
