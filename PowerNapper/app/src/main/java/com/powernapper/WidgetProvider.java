@@ -37,37 +37,28 @@ public class WidgetProvider extends AppWidgetProvider {
 
         final int count = appWidgetIds.length;
 
+        RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_main);
 
         for (int i = 0; i < count; i++) {
             int widgetId = appWidgetIds[i];
-            String number = String.format("%03d", (new Random().nextInt(900) + 100));
 
-            RemoteViews remoteViews = new RemoteViews(context.getPackageName(),
-                    R.layout.widget_main);
+
+
+            String number = String.format("%03d", (new Random().nextInt(900) + 100));
             remoteViews.setTextViewText(R.id.textView, String.valueOf(getTime()[0])+":"+String.valueOf(getTime()[1])+":"+String.valueOf(getTime()[2]));
 
-            Intent intent = new Intent(context, WidgetProvider.class);
-            intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
-                    0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
+            // --- Update Widget with new time
+//            Intent intent = new Intent(context, WidgetProvider.class);
+//            intent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+//            intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
+//            PendingIntent pendingIntent = PendingIntent.getBroadcast(context,
+//                    0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+//            remoteViews.setOnClickPendingIntent(R.id.updateWidgetID, pendingIntent);
 
 
 
             remoteViews.setOnClickPendingIntent(R.id.updateWidgetID, getPendingSelfIntent(context, MyOnClick));
-
-
-            PendingIntent quarterPending = PendingIntent.getActivity(context, 1, getAlarmIntent(0,15), PendingIntent.FLAG_CANCEL_CURRENT);
-            PendingIntent halfPending = PendingIntent.getActivity(context, 2, getAlarmIntent(0,30), PendingIntent.FLAG_CANCEL_CURRENT);
-            PendingIntent onePending = PendingIntent.getActivity(context, 3, getAlarmIntent(1,0), PendingIntent.FLAG_CANCEL_CURRENT);
-            PendingIntent twoPending = PendingIntent.getActivity(context, 4, getAlarmIntent(2,0), PendingIntent.FLAG_CANCEL_CURRENT);
-
-//            remoteViews.setOnClickPendingIntent(R.id.updateWidgetID, pendingIntent);
-            remoteViews.setOnClickPendingIntent(R.id.quarterWidgetID, quarterPending);
-            remoteViews.setOnClickPendingIntent(R.id.halfWidgetID, halfPending);
-            remoteViews.setOnClickPendingIntent(R.id.oneWidgetID, onePending);
-            remoteViews.setOnClickPendingIntent(R.id.twoWidgetID, twoPending);
             appWidgetManager.updateAppWidget(widgetId, remoteViews);
         }
 
@@ -96,6 +87,21 @@ public class WidgetProvider extends AppWidgetProvider {
 
 
                 remoteViews.setTextViewText(R.id.textView, "KLSDFJLJ");
+
+
+                PendingIntent quarterPending = PendingIntent.getActivity(context, 1, getAlarmIntent(0,15), PendingIntent.FLAG_CANCEL_CURRENT);
+                PendingIntent halfPending = PendingIntent.getActivity(context, 2, getAlarmIntent(0,30), PendingIntent.FLAG_CANCEL_CURRENT);
+                PendingIntent onePending = PendingIntent.getActivity(context, 3, getAlarmIntent(1,0), PendingIntent.FLAG_CANCEL_CURRENT);
+                PendingIntent twoPending = PendingIntent.getActivity(context, 4, getAlarmIntent(2,0), PendingIntent.FLAG_CANCEL_CURRENT);
+
+
+                remoteViews.setOnClickPendingIntent(R.id.quarterWidgetID, quarterPending);
+                remoteViews.setOnClickPendingIntent(R.id.halfWidgetID, halfPending);
+                remoteViews.setOnClickPendingIntent(R.id.oneWidgetID, onePending);
+                remoteViews.setOnClickPendingIntent(R.id.twoWidgetID, twoPending);
+
+
+
             }else{
                 widgetExpanded = false;
             }

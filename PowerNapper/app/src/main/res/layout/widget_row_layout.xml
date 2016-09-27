@@ -9,4 +9,30 @@
         android:layout_height="30dp"
         android:text="Testing!!"
         android:textColor="@android:color/black"/>
+
+    <Button
+        android:id="@+id/quarterWidgetID"
+        android:text="15 Minutes"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_weight="1"/>
+    <Button
+        android:id="@+id/halfWidgetID"
+        android:text="30 Minutes"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
+    <Button
+        android:id="@+id/oneWidgetID"
+        android:text="1 hour"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
+    <Button
+        android:id="@+id/twoWidgetID"
+        android:text="2 hour"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="30dp" />
+
 </LinearLayout>
