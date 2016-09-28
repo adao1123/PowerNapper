@@ -49,19 +49,7 @@ public class WidgetProvider extends AppWidgetProvider {
 
             // ClickListener on widget to expand
             remoteViews.setOnClickPendingIntent(R.id.updateWidgetID, getPendingSelfIntent(context, MyOnClick));
-
-
-
-
-
-            // --- Update Widget
-//            Intent updateIntent = new Intent(context, WidgetProvider.class);
-//            updateIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
-//            updateIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS, appWidgetIds);
-//            PendingIntent updatePending = PendingIntent.getBroadcast(context,
-//                    10, updateIntent, PendingIntent.FLAG_UPDATE_CURRENT);
-//            remoteViews.setOnClickPendingIntent(R.id.updateWidgetID, updatePending);
-
+            
             // --- Set Listeners to Buttons ---//
             remoteViews.setViewVisibility(R.id.quarterWidgetID, View.GONE);
             remoteViews.setViewVisibility(R.id.halfWidgetID, View.GONE);
@@ -94,10 +82,6 @@ public class WidgetProvider extends AppWidgetProvider {
                 widgetExpanded = true;
                 Log.d(TAG, "if eqauls False: " + widgetExpanded);
                 remoteViews.setTextViewText(R.id.textView, "Expanded");
-
-                // ---- Expand Buttons ---//
-    //            remoteViews.addView(remoteViews.getLayoutId(), newView);
-//                remoteViews.addView(R.id.view_container, newView);
 
                 PendingIntent quarterPending = PendingIntent.getActivity(context, 1, getAlarmIntent(0,15), PendingIntent.FLAG_CANCEL_CURRENT);
                 PendingIntent halfPending = PendingIntent.getActivity(context, 2, getAlarmIntent(0,30), PendingIntent.FLAG_CANCEL_CURRENT);
