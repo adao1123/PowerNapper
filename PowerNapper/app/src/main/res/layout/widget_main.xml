@@ -20,9 +20,9 @@
 
     <Button
         android:id="@+id/updateWidgetID"
-        android:text="Update"
+        android:text="Alarm"
         android:layout_width="match_parent"
-        android:layout_height="30dp" />
+        android:layout_height="35dp" />
 
 
     <LinearLayout
@@ -31,6 +31,31 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
         <!-- New views will be added here at runtime -->
+
+        <Button
+            android:id="@+id/quarterWidgetID"
+            android:text="15 Minutes"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_weight="1"/>
+        <Button
+            android:id="@+id/halfWidgetID"
+            android:text="30 Minutes"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="35dp" />
+        <Button
+            android:id="@+id/oneWidgetID"
+            android:text="1 hour"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="35dp" />
+        <Button
+            android:id="@+id/twoWidgetID"
+            android:text="2 hour"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="35dp" />
     </LinearLayout>
 
 
