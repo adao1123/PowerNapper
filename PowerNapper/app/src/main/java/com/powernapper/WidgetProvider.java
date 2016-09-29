@@ -10,6 +10,8 @@ import android.opengl.Visibility;
 import android.provider.AlarmClock;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.RemoteViews;
 import android.widget.Toast;
 
@@ -26,7 +28,8 @@ public class WidgetProvider extends AppWidgetProvider {
     private static final String TAG = "Widget Provider";
     static boolean widgetExpanded = false;
     private static final String MyOnClick = "myOnClickTag";
-
+    private Animation slideUp;
+    private Animation slideDown;
 
     protected PendingIntent getPendingSelfIntent(Context context, String action){
         Intent intent = new Intent(context, getClass());
@@ -40,7 +43,7 @@ public class WidgetProvider extends AppWidgetProvider {
 
         final int count = appWidgetIds.length;
 
-
+        loadAnimation(context);
 
         for (int i = 0; i < count; i++) {
             int widgetId = appWidgetIds[i];
@@ -49,7 +52,8 @@ public class WidgetProvider extends AppWidgetProvider {
 
             // ClickListener on widget to expand
             remoteViews.setOnClickPendingIntent(R.id.updateWidgetID, getPendingSelfIntent(context, MyOnClick));
-            
+
+         //   remoteViews.setViewVisibility(R.id.text_progressBar, View.GONE);
             // --- Set Listeners to Buttons ---//
             remoteViews.setViewVisibility(R.id.quarterWidgetID, View.GONE);
             remoteViews.setViewVisibility(R.id.halfWidgetID, View.GONE);
@@ -60,6 +64,11 @@ public class WidgetProvider extends AppWidgetProvider {
 
         }
 
+    }
+
+    private void loadAnimation(Context context){
+        slideUp = AnimationUtils.loadAnimation(context, R.anim.slide_up);
+        slideDown = AnimationUtils.loadAnimation(context, R.anim.slide_down);
     }
 
 
@@ -94,7 +103,7 @@ public class WidgetProvider extends AppWidgetProvider {
                 remoteViews.setOnClickPendingIntent(R.id.oneWidgetID, onePending);
                 remoteViews.setOnClickPendingIntent(R.id.twoWidgetID, twoPending);
 
-
+                //remoteViews.setViewVisibility(R.id.text_progressBar, View.VISIBLE);
                 remoteViews.setViewVisibility(R.id.quarterWidgetID, View.VISIBLE);
                 remoteViews.setViewVisibility(R.id.halfWidgetID, View.VISIBLE);
                 remoteViews.setViewVisibility(R.id.oneWidgetID, View.VISIBLE);
