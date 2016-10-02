@@ -13,11 +13,9 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.RemoteViews;
-import android.widget.Toast;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Random;
+
 
 /**
  * Created by adao1 on 9/25/2016.
