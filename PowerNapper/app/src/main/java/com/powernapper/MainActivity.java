@@ -29,6 +29,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         oneButton = (Button)findViewById(R.id.oneButtonID);
         twoButton = (Button)findViewById(R.id.twoButtonID);
         setListeners();
+
     }
 
     private void setListeners(){
