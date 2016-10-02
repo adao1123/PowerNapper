@@ -6,7 +6,6 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
-import android.opengl.Visibility;
 import android.provider.AlarmClock;
 import android.util.Log;
 import android.view.View;
@@ -54,9 +53,13 @@ public class WidgetProvider extends AppWidgetProvider {
          //   remoteViews.setViewVisibility(R.id.text_progressBar, View.GONE);
             // --- Set Listeners to Buttons ---//
             remoteViews.setViewVisibility(R.id.quarterWidgetID, View.GONE);
+            remoteViews.setViewVisibility(R.id.quarterWidgetIDTextView, View.GONE);
             remoteViews.setViewVisibility(R.id.halfWidgetID, View.GONE);
+            remoteViews.setViewVisibility(R.id.halfWidgetIDTextView, View.GONE);
             remoteViews.setViewVisibility(R.id.oneWidgetID, View.GONE);
+            remoteViews.setViewVisibility(R.id.oneWidgetIDTextView, View.GONE);
             remoteViews.setViewVisibility(R.id.twoWidgetID, View.GONE);
+            remoteViews.setViewVisibility(R.id.twoWidgetIDTextView, View.GONE);
 
             appWidgetManager.updateAppWidget(widgetId, remoteViews);
 
@@ -103,9 +106,13 @@ public class WidgetProvider extends AppWidgetProvider {
 
                 //remoteViews.setViewVisibility(R.id.text_progressBar, View.VISIBLE);
                 remoteViews.setViewVisibility(R.id.quarterWidgetID, View.VISIBLE);
+                remoteViews.setViewVisibility(R.id.quarterWidgetIDTextView, View.VISIBLE);
                 remoteViews.setViewVisibility(R.id.halfWidgetID, View.VISIBLE);
+                remoteViews.setViewVisibility(R.id.halfWidgetIDTextView, View.VISIBLE);
                 remoteViews.setViewVisibility(R.id.oneWidgetID, View.VISIBLE);
+                remoteViews.setViewVisibility(R.id.oneWidgetIDTextView, View.VISIBLE);
                 remoteViews.setViewVisibility(R.id.twoWidgetID, View.VISIBLE);
+                remoteViews.setViewVisibility(R.id.twoWidgetIDTextView, View.VISIBLE);
 
 
 
@@ -118,9 +125,13 @@ public class WidgetProvider extends AppWidgetProvider {
                 Log.d(TAG, "if eqauls True: " + widgetExpanded);
                 remoteViews.setTextViewText(R.id.textView, "Collapsed");
                 remoteViews.setViewVisibility(R.id.quarterWidgetID, View.GONE);
+                remoteViews.setViewVisibility(R.id.quarterWidgetIDTextView, View.GONE);
                 remoteViews.setViewVisibility(R.id.halfWidgetID, View.GONE);
+                remoteViews.setViewVisibility(R.id.halfWidgetIDTextView, View.GONE);
                 remoteViews.setViewVisibility(R.id.oneWidgetID, View.GONE);
+                remoteViews.setViewVisibility(R.id.oneWidgetIDTextView, View.GONE);
                 remoteViews.setViewVisibility(R.id.twoWidgetID, View.GONE);
+                remoteViews.setViewVisibility(R.id.twoWidgetIDTextView, View.GONE);
                 AppWidgetManager.getInstance( context ).updateAppWidget( alarmWidget, remoteViews );
             }
 
