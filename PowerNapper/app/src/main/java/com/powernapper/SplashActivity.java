@@ -1,6 +1,7 @@
 package com.powernapper;
 
 import android.app.Dialog;
+import android.appwidget.AppWidgetManager;
 import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -106,8 +107,8 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
         final EditText minuteET = (EditText) editDialog.findViewById(R.id.dialog_minute_ET);
         hourET.setText(timeArray[0]+"");
         minuteET.setText(timeArray[1]+"");
-        hourET.setHint(timeArray[0]+"");
-        minuteET.setHint(timeArray[1]+"");
+//        hourET.setHint(timeArray[0]+"");
+//        minuteET.setHint(timeArray[1]+"");
         editDialog.show();
         Button saveButton = (Button)editDialog.findViewById(R.id.dialog_save_button);
         saveButton.setOnClickListener(new View.OnClickListener() {
@@ -123,6 +124,12 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
                 else{
                     timeTV.setText(hour+"h "+minute+"m");
                 }
+                Intent widgetIntent = new Intent(getBaseContext(),WidgetProvider.class);
+                widgetIntent.putExtra("KEY",hour+"h "+minute+"m");
+                widgetIntent.setAction(AppWidgetManager.ACTION_APPWIDGET_UPDATE);
+                int[] ids = {R.xml.mywidget};
+                widgetIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_IDS,ids);
+                sendBroadcast(widgetIntent);
                 editDialog.dismiss();
             }
         });
