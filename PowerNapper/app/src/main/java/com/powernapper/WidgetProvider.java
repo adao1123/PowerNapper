@@ -160,12 +160,14 @@ public class WidgetProvider extends AppWidgetProvider {
                 remoteViews.setViewVisibility(R.id.twoWidgetID, View.VISIBLE);
                 remoteViews.setViewVisibility(R.id.twoWidgetIDTextView, View.VISIBLE);
 
+                remoteViews.setTextViewText(R.id.quarterWidgetIDTextView, hour1 + "h" + " " + min1 + "m" );
+                remoteViews.setTextViewText(R.id.halfWidgetIDTextView, hour2 + "h" + " " + min2 + "m" );
+                remoteViews.setTextViewText(R.id.oneWidgetIDTextView, hour3 + "h" + " " + min3 + "m" );
+                remoteViews.setTextViewText(R.id.twoWidgetIDTextView, hour4 + "h" + " " + min4 + "m" );
 
 
-          //      remoteViews.setTextViewText(R.id.textView, String.valueOf(getTime()[0])+":"+String.valueOf(getTime()[1])+":"+String.valueOf(getTime()[2]));
                 AppWidgetManager.getInstance( context ).updateAppWidget( alarmWidget, remoteViews );
-
-
+                
             }else{
                 widgetExpanded = false;
                 Log.d(TAG, "if eqauls True: " + widgetExpanded);
