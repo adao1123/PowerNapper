@@ -124,7 +124,7 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
                 if (Integer.parseInt(hour)==0) timeTV.setText(minute+"m");
                 else if (Integer.parseInt(minute)==0) timeTV.setText(hour+"h");
                 else timeTV.setText(hour+"h "+minute+"m");
-                passTimeToWidget(hour+"h "+minute+"m",intentKey);
+//                passTimeToWidget(hour+"h "+minute+"m",intentKey);
 
                 SharedPreferences sharedPreferences = getSharedPreferences("PREF_TIME_KEY", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
