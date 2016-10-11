@@ -6,6 +6,8 @@ import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.provider.AlarmClock;
 import android.util.Log;
 import android.view.View;
@@ -27,6 +29,8 @@ public class WidgetProvider extends AppWidgetProvider {
     private static final String MyOnClick = "myOnClickTag";
     private Animation slideUp;
     private Animation slideDown;
+    int min;
+    int hour;
 
     protected PendingIntent getPendingSelfIntent(Context context, String action){
         Intent intent = new Intent(context, getClass());
@@ -76,6 +80,31 @@ public class WidgetProvider extends AppWidgetProvider {
     @Override
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
+        Log.d(TAG, "onReceive: Hour " + hour);
+        Log.d(TAG, "onReceive: Min " + min);
+
+
+        SharedPreferences sharedPrefernces = context.getSharedPreferences("PREF_TIME_KEY", Context.MODE_PRIVATE);
+
+        String time1 =sharedPrefernces.getString("TIMEKEY1", "22h 22m");
+        int[] time = changeTimeTextToInt(time1);
+        hour = time[0];
+        min = time[1];
+        Log.d(TAG, "onReceive: Hour " + hour);
+        Log.d(TAG, "onReceive: Min " + min);
+
+
+//        String action = intent.getAction();
+//        Bundle extras = intent.getExtras();
+//        if(extras != null){
+//            String time1 = extras.getString("TIMEKEY1");
+//            int[] time = changeTimeTextToInt(time1);
+//            hour = time[0];
+//            min = time[1];
+//            Log.d(TAG, "onReceive: Hour " + hour);
+//            Log.d(TAG, "onReceive: Min " + min);
+//        }
+
 
         if(MyOnClick.equals(intent.getAction())){
             Log.d(TAG, "Widget Expanded: " + widgetExpanded);
@@ -93,8 +122,8 @@ public class WidgetProvider extends AppWidgetProvider {
                 Log.d(TAG, "if eqauls False: " + widgetExpanded);
                 remoteViews.setTextViewText(R.id.textView, "Expanded");
 
-                PendingIntent quarterPending = PendingIntent.getActivity(context, 1, getAlarmIntent(0,15), PendingIntent.FLAG_CANCEL_CURRENT);
-                PendingIntent halfPending = PendingIntent.getActivity(context, 2, getAlarmIntent(0,30), PendingIntent.FLAG_CANCEL_CURRENT);
+                PendingIntent quarterPending = PendingIntent.getActivity(context, 1, getAlarmIntent(0, 15), PendingIntent.FLAG_CANCEL_CURRENT);
+                PendingIntent halfPending = PendingIntent.getActivity(context, 2, getAlarmIntent(0, 30), PendingIntent.FLAG_CANCEL_CURRENT);
                 PendingIntent onePending = PendingIntent.getActivity(context, 3, getAlarmIntent(1,0), PendingIntent.FLAG_CANCEL_CURRENT);
                 PendingIntent twoPending = PendingIntent.getActivity(context, 4, getAlarmIntent(2,0), PendingIntent.FLAG_CANCEL_CURRENT);
 
@@ -184,6 +213,24 @@ public class WidgetProvider extends AppWidgetProvider {
         Log.i(TAG, "isPm: "+format);
         if (format.equals("PM"))return true;
         return false;
+    }
+
+    private int[] changeTimeTextToInt(String timeText){
+        int[] timeArray = new int[2];
+        if (!timeText.contains("h")){
+            timeArray[0]=0;
+            timeArray[1]=Integer.parseInt(timeText.substring(0,timeText.length()-1));
+            return timeArray;
+        }
+        if (!timeText.contains("m")){
+            timeArray[1]=0;
+            timeArray[0]=Integer.parseInt(timeText.substring(0,timeText.length()-1));
+            return timeArray;
+        }
+        String[] dividedTime = timeText.substring(0,timeText.length()-1).split("h ");
+        timeArray[0] = Integer.parseInt(dividedTime[0]);
+        timeArray[1] = Integer.parseInt(dividedTime[1]);
+        return timeArray;
     }
 
 
