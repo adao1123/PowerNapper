@@ -2,7 +2,9 @@ package com.powernapper;
 
 import android.app.Dialog;
 import android.appwidget.AppWidgetManager;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -122,7 +124,14 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
                 if (Integer.parseInt(hour)==0) timeTV.setText(minute+"m");
                 else if (Integer.parseInt(minute)==0) timeTV.setText(hour+"h");
                 else timeTV.setText(hour+"h "+minute+"m");
-                passTimeToWidget(hour+"h "+minute+"m",intentKey);
+//                passTimeToWidget(hour+"h "+minute+"m",intentKey);
+
+                SharedPreferences sharedPreferences = getSharedPreferences("PREF_TIME_KEY", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString(intentKey, hour+"h "+minute+"m");
+                editor.commit();
+
+
                 editDialog.dismiss();
             }
         });
