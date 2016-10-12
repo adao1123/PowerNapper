@@ -58,24 +58,15 @@ public class WidgetProvider extends AppWidgetProvider {
         for (int i = 0; i < count; i++) {
             int widgetId = appWidgetIds[i];
             RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_main);
-    //        remoteViews.setTextViewText(R.id.textView, String.valueOf(getTime()[0])+":"+String.valueOf(getTime()[1])+":"+String.valueOf(getTime()[2]));
 
             // ClickListener on widget to expand
             remoteViews.setOnClickPendingIntent(R.id.updateWidgetID, getPendingSelfIntent(context, MyOnClick));
 
-         //   remoteViews.setWidgetViewVisibility(R.id.text_progressBar, View.GONE);
-            // --- Set Listeners to Buttons ---//
-            remoteViews.setViewVisibility(R.id.quarterWidgetID, View.GONE);
-            remoteViews.setViewVisibility(R.id.quarterWidgetIDTextView, View.GONE);
-            remoteViews.setViewVisibility(R.id.halfWidgetID, View.GONE);
-            remoteViews.setViewVisibility(R.id.halfWidgetIDTextView, View.GONE);
-            remoteViews.setViewVisibility(R.id.oneWidgetID, View.GONE);
-            remoteViews.setViewVisibility(R.id.oneWidgetIDTextView, View.GONE);
-            remoteViews.setViewVisibility(R.id.twoWidgetID, View.GONE);
-            remoteViews.setViewVisibility(R.id.twoWidgetIDTextView, View.GONE);
+            // Initialize view visibility to gone
+            setWidgetViewVisibility(remoteViews, widgetIconViews, View.GONE);
+            setWidgetViewVisibility(remoteViews, widgetIconTextViews, View.GONE);
 
             appWidgetManager.updateAppWidget(widgetId, remoteViews);
-
         }
 
     }
@@ -92,7 +83,7 @@ public class WidgetProvider extends AppWidgetProvider {
 
 
         getSharedPreferences(context);
-        
+
         if(MyOnClick.equals(intent.getAction())){
             Log.d(TAG, "Widget Expanded: " + widgetExpanded);
             // Updates App
