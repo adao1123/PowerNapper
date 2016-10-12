@@ -49,16 +49,16 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.timelayout1:
-                displayEditDialog(changeTimeTextToInt(timeTV1.getText().toString()),timeTV1,"TIMEKEY1");
+                displayEditDialog(changeTimeTextToInt(timeTV1.getText().toString()),timeTV1, WidgetProvider.TIME_KEY1);
                 break;
             case R.id.timelayout2:
-                displayEditDialog(changeTimeTextToInt(timeTV2.getText().toString()),timeTV2,"TIMEKEY2");
+                displayEditDialog(changeTimeTextToInt(timeTV2.getText().toString()),timeTV2, WidgetProvider.TIME_KEY2);
                 break;
             case R.id.timelayout3:
-                displayEditDialog(changeTimeTextToInt(timeTV3.getText().toString()),timeTV3,"TIMEKEY3");
+                displayEditDialog(changeTimeTextToInt(timeTV3.getText().toString()),timeTV3, WidgetProvider.TIME_KEY3);
                 break;
             case R.id.timelayout4:
-                displayEditDialog(changeTimeTextToInt(timeTV4.getText().toString()),timeTV4,"TIMEKEY4");
+                displayEditDialog(changeTimeTextToInt(timeTV4.getText().toString()),timeTV4, WidgetProvider.TIME_KEY4);
                 break;
             default:
                 break;
@@ -126,7 +126,7 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
                 else timeTV.setText(hour+"h "+minute+"m");
 //                passTimeToWidget(hour+"h "+minute+"m",intentKey);
 
-                SharedPreferences sharedPreferences = getSharedPreferences("PREF_TIME_KEY", Context.MODE_PRIVATE);
+                SharedPreferences sharedPreferences = getSharedPreferences(WidgetProvider.PREF_TIME_KEY, Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString(intentKey, hour+"h "+minute+"m");
                 editor.commit();

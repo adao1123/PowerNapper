@@ -27,6 +27,7 @@ public class WidgetProvider extends AppWidgetProvider {
     public static final String TIME_KEY2 = "TIMEKEY2";
     public static final String TIME_KEY3 = "TIMEKEY3";
     public static final String TIME_KEY4 = "TIMEKEY4";
+    public static final String PREF_TIME_KEY = "PREF_TIME_KEY";
 
     private static final String TAG = "Widget Provider";
     static boolean widgetExpanded = false;
@@ -92,24 +93,24 @@ public class WidgetProvider extends AppWidgetProvider {
         Log.d(TAG, "onReceive: Min " + min1);
 
 
-        SharedPreferences sharedPreferences = context.getSharedPreferences("PREF_TIME_KEY", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PREF_TIME_KEY, Context.MODE_PRIVATE);
 
-        String time1 = sharedPreferences.getString("TIMEKEY1", "0h 15m");
+        String time1 = sharedPreferences.getString(TIME_KEY1, "0h 15m");
         int[] timeOne = changeTimeTextToInt(time1);
         hour1 = timeOne[0];
         min1 = timeOne[1];
 
-        String time2 = sharedPreferences.getString("TIMEKEY2", "0h 30m");
+        String time2 = sharedPreferences.getString(TIME_KEY2, "0h 30m");
         int[] timeTwo = changeTimeTextToInt(time2);
         hour2 = timeTwo[0];
         min2 = timeTwo[1];
 
-        String time3 = sharedPreferences.getString("TIMEKEY3", "1h 0m");
+        String time3 = sharedPreferences.getString(TIME_KEY3, "1h 0m");
         int[] timeThree = changeTimeTextToInt(time3);
         hour3 = timeThree[0];
         min3 = timeThree[1];
 
-        String time4 = sharedPreferences.getString("TIMEKEY4", "2h 0m");
+        String time4 = sharedPreferences.getString(TIME_KEY4, "2h 0m");
         int[] timeFour = changeTimeTextToInt(time4);
         hour4 = timeFour[0];
         min4 = timeFour[1];
