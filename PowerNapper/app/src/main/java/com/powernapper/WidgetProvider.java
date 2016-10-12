@@ -32,14 +32,11 @@ public class WidgetProvider extends AppWidgetProvider {
     private static final String TAG = "Widget Provider";
     static boolean widgetExpanded = false;
     private static final String MyOnClick = "myOnClickTag";
-    private Animation slideUp;
-    private Animation slideDown;
     int min1, min2, min3, min4;
     int hour1, hour2, hour3, hour4;
 
     int[] widgetIconViews = {R.id.quarterWidgetID, R.id.halfWidgetID, R.id.oneWidgetID, R.id.twoWidgetID};
     int[] widgetIconTextViews = {R.id.quarterWidgetIDTextView, R.id.halfWidgetIDTextView, R.id.oneWidgetIDTextView, R.id.twoWidgetIDTextView};
-
 
     protected PendingIntent getPendingSelfIntent(Context context, String action){
         Intent intent = new Intent(context, getClass());
@@ -52,8 +49,6 @@ public class WidgetProvider extends AppWidgetProvider {
         super.onUpdate(context, appWidgetManager, appWidgetIds);
 
         final int count = appWidgetIds.length;
-
-        loadAnimation(context);
 
         for (int i = 0; i < count; i++) {
             int widgetId = appWidgetIds[i];
@@ -70,12 +65,6 @@ public class WidgetProvider extends AppWidgetProvider {
         }
 
     }
-
-    private void loadAnimation(Context context){
-        slideUp = AnimationUtils.loadAnimation(context, R.anim.slide_up);
-        slideDown = AnimationUtils.loadAnimation(context, R.anim.slide_down);
-    }
-
 
     @Override
     public void onReceive(Context context, Intent intent) {
