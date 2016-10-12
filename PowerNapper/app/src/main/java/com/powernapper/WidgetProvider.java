@@ -23,6 +23,12 @@ import java.util.Date;
 
 public class WidgetProvider extends AppWidgetProvider {
 
+    public static final String TIME_KEY1 = "TIMEKEY1";
+    public static final String TIME_KEY2 = "TIMEKEY2";
+    public static final String TIME_KEY3 = "TIMEKEY3";
+    public static final String TIME_KEY4 = "TIMEKEY4";
+    public static final String PREF_TIME_KEY = "PREF_TIME_KEY";
+
     private static final String TAG = "Widget Provider";
     static boolean widgetExpanded = false;
     private static final String MyOnClick = "myOnClickTag";
@@ -30,6 +36,10 @@ public class WidgetProvider extends AppWidgetProvider {
     private Animation slideDown;
     int min1, min2, min3, min4;
     int hour1, hour2, hour3, hour4;
+
+    int[] widgetIconViews = {R.id.quarterWidgetID, R.id.halfWidgetID, R.id.oneWidgetID, R.id.twoWidgetID};
+    int[] widgetIconTextViews = {R.id.quarterWidgetIDTextView, R.id.halfWidgetIDTextView, R.id.oneWidgetIDTextView, R.id.twoWidgetIDTextView};
+
 
     protected PendingIntent getPendingSelfIntent(Context context, String action){
         Intent intent = new Intent(context, getClass());
@@ -53,7 +63,7 @@ public class WidgetProvider extends AppWidgetProvider {
             // ClickListener on widget to expand
             remoteViews.setOnClickPendingIntent(R.id.updateWidgetID, getPendingSelfIntent(context, MyOnClick));
 
-         //   remoteViews.setViewVisibility(R.id.text_progressBar, View.GONE);
+         //   remoteViews.setWidgetViewVisibility(R.id.text_progressBar, View.GONE);
             // --- Set Listeners to Buttons ---//
             remoteViews.setViewVisibility(R.id.quarterWidgetID, View.GONE);
             remoteViews.setViewVisibility(R.id.quarterWidgetIDTextView, View.GONE);
@@ -83,24 +93,24 @@ public class WidgetProvider extends AppWidgetProvider {
         Log.d(TAG, "onReceive: Min " + min1);
 
 
-        SharedPreferences sharedPreferences = context.getSharedPreferences("PREF_TIME_KEY", Context.MODE_PRIVATE);
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PREF_TIME_KEY, Context.MODE_PRIVATE);
 
-        String time1 = sharedPreferences.getString("TIMEKEY1", "0h 15m");
+        String time1 = sharedPreferences.getString(TIME_KEY1, "0h 15m");
         int[] timeOne = changeTimeTextToInt(time1);
         hour1 = timeOne[0];
         min1 = timeOne[1];
 
-        String time2 = sharedPreferences.getString("TIMEKEY2", "0h 30m");
+        String time2 = sharedPreferences.getString(TIME_KEY2, "0h 30m");
         int[] timeTwo = changeTimeTextToInt(time2);
         hour2 = timeTwo[0];
         min2 = timeTwo[1];
 
-        String time3 = sharedPreferences.getString("TIMEKEY3", "1h 0m");
+        String time3 = sharedPreferences.getString(TIME_KEY3, "1h 0m");
         int[] timeThree = changeTimeTextToInt(time3);
         hour3 = timeThree[0];
         min3 = timeThree[1];
 
-        String time4 = sharedPreferences.getString("TIMEKEY4", "2h 0m");
+        String time4 = sharedPreferences.getString(TIME_KEY4, "2h 0m");
         int[] timeFour = changeTimeTextToInt(time4);
         hour4 = timeFour[0];
         min4 = timeFour[1];
@@ -137,7 +147,6 @@ public class WidgetProvider extends AppWidgetProvider {
             if(widgetExpanded == false){
                 widgetExpanded = true;
                 Log.d(TAG, "if eqauls False: " + widgetExpanded);
-                remoteViews.setTextViewText(R.id.textView, "Expanded");
 
                 PendingIntent quarterPending = PendingIntent.getActivity(context, 1, getAlarmIntent(hour1, min1), PendingIntent.FLAG_CANCEL_CURRENT);
                 PendingIntent halfPending = PendingIntent.getActivity(context, 2, getAlarmIntent(hour2, min2), PendingIntent.FLAG_CANCEL_CURRENT);
@@ -145,20 +154,16 @@ public class WidgetProvider extends AppWidgetProvider {
                 PendingIntent twoPending = PendingIntent.getActivity(context, 4, getAlarmIntent(hour4,min4), PendingIntent.FLAG_CANCEL_CURRENT);
 
 
+
                 remoteViews.setOnClickPendingIntent(R.id.quarterWidgetID, quarterPending);
                 remoteViews.setOnClickPendingIntent(R.id.halfWidgetID, halfPending);
                 remoteViews.setOnClickPendingIntent(R.id.oneWidgetID, onePending);
                 remoteViews.setOnClickPendingIntent(R.id.twoWidgetID, twoPending);
 
-                //remoteViews.setViewVisibility(R.id.text_progressBar, View.VISIBLE);
-                remoteViews.setViewVisibility(R.id.quarterWidgetID, View.VISIBLE);
-                remoteViews.setViewVisibility(R.id.quarterWidgetIDTextView, View.VISIBLE);
-                remoteViews.setViewVisibility(R.id.halfWidgetID, View.VISIBLE);
-                remoteViews.setViewVisibility(R.id.halfWidgetIDTextView, View.VISIBLE);
-                remoteViews.setViewVisibility(R.id.oneWidgetID, View.VISIBLE);
-                remoteViews.setViewVisibility(R.id.oneWidgetIDTextView, View.VISIBLE);
-                remoteViews.setViewVisibility(R.id.twoWidgetID, View.VISIBLE);
-                remoteViews.setViewVisibility(R.id.twoWidgetIDTextView, View.VISIBLE);
+
+                setWidgetViewVisibility(remoteViews, widgetIconViews, View.VISIBLE);
+                setWidgetViewVisibility(remoteViews, widgetIconTextViews, View.VISIBLE);
+
 
                 remoteViews.setTextViewText(R.id.quarterWidgetIDTextView, hour1 + "h" + " " + min1 + "m" );
                 remoteViews.setTextViewText(R.id.halfWidgetIDTextView, hour2 + "h" + " " + min2 + "m" );
@@ -171,15 +176,9 @@ public class WidgetProvider extends AppWidgetProvider {
             }else{
                 widgetExpanded = false;
                 Log.d(TAG, "if eqauls True: " + widgetExpanded);
-                remoteViews.setTextViewText(R.id.textView, "Collapsed");
-                remoteViews.setViewVisibility(R.id.quarterWidgetID, View.GONE);
-                remoteViews.setViewVisibility(R.id.quarterWidgetIDTextView, View.GONE);
-                remoteViews.setViewVisibility(R.id.halfWidgetID, View.GONE);
-                remoteViews.setViewVisibility(R.id.halfWidgetIDTextView, View.GONE);
-                remoteViews.setViewVisibility(R.id.oneWidgetID, View.GONE);
-                remoteViews.setViewVisibility(R.id.oneWidgetIDTextView, View.GONE);
-                remoteViews.setViewVisibility(R.id.twoWidgetID, View.GONE);
-                remoteViews.setViewVisibility(R.id.twoWidgetIDTextView, View.GONE);
+                setWidgetViewVisibility(remoteViews, widgetIconViews, View.GONE);
+                setWidgetViewVisibility(remoteViews, widgetIconTextViews, View.GONE);
+
                 AppWidgetManager.getInstance( context ).updateAppWidget( alarmWidget, remoteViews );
             }
 
@@ -187,6 +186,13 @@ public class WidgetProvider extends AppWidgetProvider {
 
         }
     }
+
+    private void setWidgetViewVisibility(RemoteViews remoteViews, int[] views, int visiblity){
+        for(int id : views){
+            remoteViews.setViewVisibility(id, visiblity);
+        }
+    }
+
 
     private Intent getAlarmIntent(int hours, int minutes){
         Intent alarmIntent = new Intent(AlarmClock.ACTION_SET_ALARM);
