@@ -46,6 +46,7 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
         hideActionBar();
         initViews();
         setFont();
+        displayInitialTimes();
         setEditListeners();
         createEditDialog();
     }
@@ -185,7 +186,10 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
     }
     private void displayInitialTimes(){
         SharedPreferences sharedPreferences = getSharedPreferences(WidgetProvider.PREF_TIME_KEY, Context.MODE_PRIVATE);
-        sharedPreferences.getString(WidgetProvider.TIME_KEY1,"15");
+        timeTV1.setText(sharedPreferences.getString(WidgetProvider.TIME_KEY1,"15m"));
+        timeTV2.setText(sharedPreferences.getString(WidgetProvider.TIME_KEY2,"30m"));
+        timeTV3.setText(sharedPreferences.getString(WidgetProvider.TIME_KEY3,"1h"));
+        timeTV4.setText(sharedPreferences.getString(WidgetProvider.TIME_KEY4,"2h"));
     }
 
 }
