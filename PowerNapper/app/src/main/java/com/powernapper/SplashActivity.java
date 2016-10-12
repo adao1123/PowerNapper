@@ -3,12 +3,15 @@ package com.powernapper;
 import android.app.Dialog;
 import android.appwidget.AppWidgetManager;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -16,6 +19,8 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import static com.powernapper.R.id.textView;
 
 public class SplashActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -39,6 +44,7 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_splash);
         hideActionBar();
         initViews();
+        setFont();
         setEditListeners();
         createEditDialog();
     }
@@ -152,4 +158,22 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
         timeArray[1] = Integer.parseInt(dividedTime[1]);
         return timeArray;
     }
+    private void setFont(){
+        TextView titleView = (TextView)findViewById(R.id.titleText);
+        TextView titleView2 = (TextView)findViewById(R.id.titleText2);
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "digitial.ttf");
+        titleView.setTypeface(typeface);
+        titleView2.setTypeface(typeface);
+        makeBlink();
+    }
+    private void makeBlink(){
+        TextView blinkingColon = (TextView)findViewById(R.id.blinkingColon);
+        Animation anim = new AlphaAnimation(0.0f, 1.0f);
+        anim.setDuration(200); //You can manage the time of the blink with this parameter
+        anim.setStartOffset(20);
+        anim.setRepeatMode(Animation.REVERSE);
+        anim.setRepeatCount(Animation.INFINITE);
+        blinkingColon.startAnimation(anim);
+    }
+
 }
