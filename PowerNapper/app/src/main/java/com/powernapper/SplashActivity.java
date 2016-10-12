@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.appwidget.AppWidgetManager;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
@@ -11,6 +12,8 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
+import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -18,6 +21,7 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 public class SplashActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -41,6 +45,7 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_splash);
         hideActionBar();
         initViews();
+        setFont();
         setEditListeners();
         createEditDialog();
     }
@@ -125,16 +130,16 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
                 else if (Integer.parseInt(minute)==0) timeTV.setText(hour+"h");
                 else timeTV.setText(hour+"h "+minute+"m");
 //                passTimeToWidget(hour+"h "+minute+"m",intentKey);
-
-                SharedPreferences sharedPreferences = getSharedPreferences(WidgetProvider.PREF_TIME_KEY, Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString(intentKey, hour+"h "+minute+"m");
-                editor.commit();
-
-
+                saveTimeToSavedPreference(hour+"h "+minute+"m",intentKey);
                 editDialog.dismiss();
             }
         });
+    }
+    private void saveTimeToSavedPreference(String timeString, String intentKey){
+        SharedPreferences sharedPreferences = getSharedPreferences(WidgetProvider.PREF_TIME_KEY, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(intentKey, timeString);
+        editor.commit();
     }
     private void passTimeToWidget(String timeString, String intentKey){
         Intent widgetIntent = new Intent(getBaseContext(),WidgetProvider.class);
@@ -161,4 +166,26 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
         timeArray[1] = Integer.parseInt(dividedTime[1]);
         return timeArray;
     }
+    private void setFont(){
+        TextView titleView = (TextView)findViewById(R.id.titleText);
+        TextView titleView2 = (TextView)findViewById(R.id.titleText2);
+        Typeface typeface = Typeface.createFromAsset(getAssets(), "digitial.ttf");
+        titleView.setTypeface(typeface);
+        titleView2.setTypeface(typeface);
+        makeBlink();
+    }
+    private void makeBlink(){
+        TextView blinkingColon = (TextView)findViewById(R.id.blinkingColon);
+        Animation anim = new AlphaAnimation(0.0f, 1.0f);
+        anim.setDuration(500); //You can manage the time of the blink with this parameter
+        anim.setStartOffset(20);
+        anim.setRepeatMode(Animation.REVERSE);
+        anim.setRepeatCount(Animation.INFINITE);
+        blinkingColon.startAnimation(anim);
+    }
+    private void displayInitialTimes(){
+        SharedPreferences sharedPreferences = getSharedPreferences(WidgetProvider.PREF_TIME_KEY, Context.MODE_PRIVATE);
+        sharedPreferences.getString(WidgetProvider.TIME_KEY1,"15");
+    }
+
 }
