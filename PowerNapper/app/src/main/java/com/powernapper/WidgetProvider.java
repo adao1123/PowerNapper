@@ -92,30 +92,7 @@ public class WidgetProvider extends AppWidgetProvider {
         Log.d(TAG, "onReceive: Hour " + hour1);
         Log.d(TAG, "onReceive: Min " + min1);
 
-
-        SharedPreferences sharedPreferences = context.getSharedPreferences(PREF_TIME_KEY, Context.MODE_PRIVATE);
-
-        String time1 = sharedPreferences.getString(TIME_KEY1, "0h 15m");
-        int[] timeOne = changeTimeTextToInt(time1);
-        hour1 = timeOne[0];
-        min1 = timeOne[1];
-
-        String time2 = sharedPreferences.getString(TIME_KEY2, "0h 30m");
-        int[] timeTwo = changeTimeTextToInt(time2);
-        hour2 = timeTwo[0];
-        min2 = timeTwo[1];
-
-        String time3 = sharedPreferences.getString(TIME_KEY3, "1h 0m");
-        int[] timeThree = changeTimeTextToInt(time3);
-        hour3 = timeThree[0];
-        min3 = timeThree[1];
-
-        String time4 = sharedPreferences.getString(TIME_KEY4, "2h 0m");
-        int[] timeFour = changeTimeTextToInt(time4);
-        hour4 = timeFour[0];
-        min4 = timeFour[1];
-
-
+        getSharedPreferences(context);
 
         Log.d(TAG, "onReceive: Hour " + hour1);
         Log.d(TAG, "onReceive: Min " + min1);
@@ -185,6 +162,30 @@ public class WidgetProvider extends AppWidgetProvider {
             appWidgetManager.updateAppWidget(alarmWidget, remoteViews);
 
         }
+    }
+
+    private void getSharedPreferences(Context context){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PREF_TIME_KEY, Context.MODE_PRIVATE);
+
+        String time1 = sharedPreferences.getString(TIME_KEY1, "0h 15m");
+        int[] timeOne = changeTimeTextToInt(time1);
+        hour1 = timeOne[0];
+        min1 = timeOne[1];
+
+        String time2 = sharedPreferences.getString(TIME_KEY2, "0h 30m");
+        int[] timeTwo = changeTimeTextToInt(time2);
+        hour2 = timeTwo[0];
+        min2 = timeTwo[1];
+
+        String time3 = sharedPreferences.getString(TIME_KEY3, "1h 0m");
+        int[] timeThree = changeTimeTextToInt(time3);
+        hour3 = timeThree[0];
+        min3 = timeThree[1];
+
+        String time4 = sharedPreferences.getString(TIME_KEY4, "2h 0m");
+        int[] timeFour = changeTimeTextToInt(time4);
+        hour4 = timeFour[0];
+        min4 = timeFour[1];
     }
 
     private void setWidgetViewVisibility(RemoteViews remoteViews, int[] views, int visiblity){
