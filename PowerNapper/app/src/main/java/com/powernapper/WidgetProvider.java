@@ -70,7 +70,6 @@ public class WidgetProvider extends AppWidgetProvider {
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
 
-
         getSharedPreferences(context);
 
         if(MyOnClick.equals(intent.getAction())){
@@ -88,28 +87,12 @@ public class WidgetProvider extends AppWidgetProvider {
                 widgetExpanded = true;
                 Log.d(TAG, "if eqauls False: " + widgetExpanded);
 
-                PendingIntent quarterPending = PendingIntent.getActivity(context, 1, getAlarmIntent(hour1, min1), PendingIntent.FLAG_CANCEL_CURRENT);
-                PendingIntent halfPending = PendingIntent.getActivity(context, 2, getAlarmIntent(hour2, min2), PendingIntent.FLAG_CANCEL_CURRENT);
-                PendingIntent onePending = PendingIntent.getActivity(context, 3, getAlarmIntent(hour3,min3), PendingIntent.FLAG_CANCEL_CURRENT);
-                PendingIntent twoPending = PendingIntent.getActivity(context, 4, getAlarmIntent(hour4,min4), PendingIntent.FLAG_CANCEL_CURRENT);
-
-
-
-                remoteViews.setOnClickPendingIntent(R.id.quarterWidgetID, quarterPending);
-                remoteViews.setOnClickPendingIntent(R.id.halfWidgetID, halfPending);
-                remoteViews.setOnClickPendingIntent(R.id.oneWidgetID, onePending);
-                remoteViews.setOnClickPendingIntent(R.id.twoWidgetID, twoPending);
-
+                setWidgetIconClickListeners(context, remoteViews);
 
                 setWidgetViewVisibility(remoteViews, widgetIconViews, View.VISIBLE);
                 setWidgetViewVisibility(remoteViews, widgetIconTextViews, View.VISIBLE);
 
-
-                remoteViews.setTextViewText(R.id.quarterWidgetIDTextView, hour1 + "h" + " " + min1 + "m" );
-                remoteViews.setTextViewText(R.id.halfWidgetIDTextView, hour2 + "h" + " " + min2 + "m" );
-                remoteViews.setTextViewText(R.id.oneWidgetIDTextView, hour3 + "h" + " " + min3 + "m" );
-                remoteViews.setTextViewText(R.id.twoWidgetIDTextView, hour4 + "h" + " " + min4 + "m" );
-
+                setNewWidgetTime(remoteViews);
 
                 AppWidgetManager.getInstance( context ).updateAppWidget( alarmWidget, remoteViews );
                 
@@ -125,6 +108,26 @@ public class WidgetProvider extends AppWidgetProvider {
             appWidgetManager.updateAppWidget(alarmWidget, remoteViews);
 
         }
+    }
+
+    private void setNewWidgetTime(RemoteViews remoteViews){
+        remoteViews.setTextViewText(R.id.quarterWidgetIDTextView, hour1 + "h" + " " + min1 + "m" );
+        remoteViews.setTextViewText(R.id.halfWidgetIDTextView, hour2 + "h" + " " + min2 + "m" );
+        remoteViews.setTextViewText(R.id.oneWidgetIDTextView, hour3 + "h" + " " + min3 + "m" );
+        remoteViews.setTextViewText(R.id.twoWidgetIDTextView, hour4 + "h" + " " + min4 + "m" );
+
+    }
+
+    private void setWidgetIconClickListeners(Context context, RemoteViews remoteViews){
+        PendingIntent quarterPending = PendingIntent.getActivity(context, 1, getAlarmIntent(hour1, min1), PendingIntent.FLAG_CANCEL_CURRENT);
+        PendingIntent halfPending = PendingIntent.getActivity(context, 2, getAlarmIntent(hour2, min2), PendingIntent.FLAG_CANCEL_CURRENT);
+        PendingIntent onePending = PendingIntent.getActivity(context, 3, getAlarmIntent(hour3,min3), PendingIntent.FLAG_CANCEL_CURRENT);
+        PendingIntent twoPending = PendingIntent.getActivity(context, 4, getAlarmIntent(hour4,min4), PendingIntent.FLAG_CANCEL_CURRENT);
+
+        remoteViews.setOnClickPendingIntent(R.id.quarterWidgetID, quarterPending);
+        remoteViews.setOnClickPendingIntent(R.id.halfWidgetID, halfPending);
+        remoteViews.setOnClickPendingIntent(R.id.oneWidgetID, onePending);
+        remoteViews.setOnClickPendingIntent(R.id.twoWidgetID, twoPending);
     }
 
     private void getSharedPreferences(Context context){
