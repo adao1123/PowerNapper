@@ -130,16 +130,16 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
                 else if (Integer.parseInt(minute)==0) timeTV.setText(hour+"h");
                 else timeTV.setText(hour+"h "+minute+"m");
 //                passTimeToWidget(hour+"h "+minute+"m",intentKey);
-
-                SharedPreferences sharedPreferences = getSharedPreferences(WidgetProvider.PREF_TIME_KEY, Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString(intentKey, hour+"h "+minute+"m");
-                editor.commit();
-
-
+                saveTimeToSavedPreference(hour+"h "+minute+"m",intentKey);
                 editDialog.dismiss();
             }
         });
+    }
+    private void saveTimeToSavedPreference(String timeString, String intentKey){
+        SharedPreferences sharedPreferences = getSharedPreferences(WidgetProvider.PREF_TIME_KEY, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(intentKey, timeString);
+        editor.commit();
     }
     private void passTimeToWidget(String timeString, String intentKey){
         Intent widgetIntent = new Intent(getBaseContext(),WidgetProvider.class);
@@ -177,11 +177,15 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
     private void makeBlink(){
         TextView blinkingColon = (TextView)findViewById(R.id.blinkingColon);
         Animation anim = new AlphaAnimation(0.0f, 1.0f);
-        anim.setDuration(200); //You can manage the time of the blink with this parameter
+        anim.setDuration(500); //You can manage the time of the blink with this parameter
         anim.setStartOffset(20);
         anim.setRepeatMode(Animation.REVERSE);
         anim.setRepeatCount(Animation.INFINITE);
         blinkingColon.startAnimation(anim);
+    }
+    private void displayInitialTimes(){
+        SharedPreferences sharedPreferences = getSharedPreferences(WidgetProvider.PREF_TIME_KEY, Context.MODE_PRIVATE);
+//        sharedPreferences.getString("TIMEKEY1",);
     }
 
 }
