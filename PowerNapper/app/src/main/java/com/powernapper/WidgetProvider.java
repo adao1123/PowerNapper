@@ -32,14 +32,11 @@ public class WidgetProvider extends AppWidgetProvider {
     private static final String TAG = "Widget Provider";
     static boolean widgetExpanded = false;
     private static final String MyOnClick = "myOnClickTag";
-    private Animation slideUp;
-    private Animation slideDown;
     int min1, min2, min3, min4;
     int hour1, hour2, hour3, hour4;
 
     int[] widgetIconViews = {R.id.quarterWidgetID, R.id.halfWidgetID, R.id.oneWidgetID, R.id.twoWidgetID};
     int[] widgetIconTextViews = {R.id.quarterWidgetIDTextView, R.id.halfWidgetIDTextView, R.id.oneWidgetIDTextView, R.id.twoWidgetIDTextView};
-
 
     protected PendingIntent getPendingSelfIntent(Context context, String action){
         Intent intent = new Intent(context, getClass());
@@ -53,85 +50,28 @@ public class WidgetProvider extends AppWidgetProvider {
 
         final int count = appWidgetIds.length;
 
-        loadAnimation(context);
-
         for (int i = 0; i < count; i++) {
             int widgetId = appWidgetIds[i];
             RemoteViews remoteViews = new RemoteViews(context.getPackageName(), R.layout.widget_main);
-    //        remoteViews.setTextViewText(R.id.textView, String.valueOf(getTime()[0])+":"+String.valueOf(getTime()[1])+":"+String.valueOf(getTime()[2]));
 
             // ClickListener on widget to expand
             remoteViews.setOnClickPendingIntent(R.id.updateWidgetID, getPendingSelfIntent(context, MyOnClick));
 
-         //   remoteViews.setWidgetViewVisibility(R.id.text_progressBar, View.GONE);
-            // --- Set Listeners to Buttons ---//
-            remoteViews.setViewVisibility(R.id.quarterWidgetID, View.GONE);
-            remoteViews.setViewVisibility(R.id.quarterWidgetIDTextView, View.GONE);
-            remoteViews.setViewVisibility(R.id.halfWidgetID, View.GONE);
-            remoteViews.setViewVisibility(R.id.halfWidgetIDTextView, View.GONE);
-            remoteViews.setViewVisibility(R.id.oneWidgetID, View.GONE);
-            remoteViews.setViewVisibility(R.id.oneWidgetIDTextView, View.GONE);
-            remoteViews.setViewVisibility(R.id.twoWidgetID, View.GONE);
-            remoteViews.setViewVisibility(R.id.twoWidgetIDTextView, View.GONE);
+            // Initialize view visibility to gone
+            setWidgetViewVisibility(remoteViews, widgetIconViews, View.GONE);
+            setWidgetViewVisibility(remoteViews, widgetIconTextViews, View.GONE);
 
             appWidgetManager.updateAppWidget(widgetId, remoteViews);
-
         }
 
     }
 
-    private void loadAnimation(Context context){
-        slideUp = AnimationUtils.loadAnimation(context, R.anim.slide_up);
-        slideDown = AnimationUtils.loadAnimation(context, R.anim.slide_down);
-    }
-
-
     @Override
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
-        Log.d(TAG, "onReceive: Hour " + hour1);
-        Log.d(TAG, "onReceive: Min " + min1);
 
 
-        SharedPreferences sharedPreferences = context.getSharedPreferences(PREF_TIME_KEY, Context.MODE_PRIVATE);
-
-        String time1 = sharedPreferences.getString(TIME_KEY1, "0h 15m");
-        int[] timeOne = changeTimeTextToInt(time1);
-        hour1 = timeOne[0];
-        min1 = timeOne[1];
-
-        String time2 = sharedPreferences.getString(TIME_KEY2, "0h 30m");
-        int[] timeTwo = changeTimeTextToInt(time2);
-        hour2 = timeTwo[0];
-        min2 = timeTwo[1];
-
-        String time3 = sharedPreferences.getString(TIME_KEY3, "1h 0m");
-        int[] timeThree = changeTimeTextToInt(time3);
-        hour3 = timeThree[0];
-        min3 = timeThree[1];
-
-        String time4 = sharedPreferences.getString(TIME_KEY4, "2h 0m");
-        int[] timeFour = changeTimeTextToInt(time4);
-        hour4 = timeFour[0];
-        min4 = timeFour[1];
-
-
-
-        Log.d(TAG, "onReceive: Hour " + hour1);
-        Log.d(TAG, "onReceive: Min " + min1);
-
-
-//        String action = intent.getAction();
-//        Bundle extras = intent.getExtras();
-//        if(extras != null){
-//            String time1 = extras.getString("TIMEKEY1");
-//            int[] time = changeTimeTextToInt(time1);
-//            hour = time[0];
-//            min = time[1];
-//            Log.d(TAG, "onReceive: Hour " + hour);
-//            Log.d(TAG, "onReceive: Min " + min);
-//        }
-
+        getSharedPreferences(context);
 
         if(MyOnClick.equals(intent.getAction())){
             Log.d(TAG, "Widget Expanded: " + widgetExpanded);
@@ -185,6 +125,30 @@ public class WidgetProvider extends AppWidgetProvider {
             appWidgetManager.updateAppWidget(alarmWidget, remoteViews);
 
         }
+    }
+
+    private void getSharedPreferences(Context context){
+        SharedPreferences sharedPreferences = context.getSharedPreferences(PREF_TIME_KEY, Context.MODE_PRIVATE);
+
+        String time1 = sharedPreferences.getString(TIME_KEY1, "0h 15m");
+        int[] timeOne = changeTimeTextToInt(time1);
+        hour1 = timeOne[0];
+        min1 = timeOne[1];
+
+        String time2 = sharedPreferences.getString(TIME_KEY2, "0h 30m");
+        int[] timeTwo = changeTimeTextToInt(time2);
+        hour2 = timeTwo[0];
+        min2 = timeTwo[1];
+
+        String time3 = sharedPreferences.getString(TIME_KEY3, "1h 0m");
+        int[] timeThree = changeTimeTextToInt(time3);
+        hour3 = timeThree[0];
+        min3 = timeThree[1];
+
+        String time4 = sharedPreferences.getString(TIME_KEY4, "2h 0m");
+        int[] timeFour = changeTimeTextToInt(time4);
+        hour4 = timeFour[0];
+        min4 = timeFour[1];
     }
 
     private void setWidgetViewVisibility(RemoteViews remoteViews, int[] views, int visiblity){
