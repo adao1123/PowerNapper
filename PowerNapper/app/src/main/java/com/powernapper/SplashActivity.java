@@ -2,8 +2,10 @@ package com.powernapper;
 
 import android.app.Dialog;
 import android.appwidget.AppWidgetManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
+import android.content.SharedPreferences;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -20,7 +22,6 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import static com.powernapper.R.id.textView;
 
 public class SplashActivity extends AppCompatActivity implements View.OnClickListener{
 
@@ -53,16 +54,16 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
     public void onClick(View view) {
         switch (view.getId()){
             case R.id.timelayout1:
-                displayEditDialog(changeTimeTextToInt(timeTV1.getText().toString()),timeTV1,"TIMEKEY1");
+                displayEditDialog(changeTimeTextToInt(timeTV1.getText().toString()),timeTV1, WidgetProvider.TIME_KEY1);
                 break;
             case R.id.timelayout2:
-                displayEditDialog(changeTimeTextToInt(timeTV2.getText().toString()),timeTV2,"TIMEKEY2");
+                displayEditDialog(changeTimeTextToInt(timeTV2.getText().toString()),timeTV2, WidgetProvider.TIME_KEY2);
                 break;
             case R.id.timelayout3:
-                displayEditDialog(changeTimeTextToInt(timeTV3.getText().toString()),timeTV3,"TIMEKEY3");
+                displayEditDialog(changeTimeTextToInt(timeTV3.getText().toString()),timeTV3, WidgetProvider.TIME_KEY3);
                 break;
             case R.id.timelayout4:
-                displayEditDialog(changeTimeTextToInt(timeTV4.getText().toString()),timeTV4,"TIMEKEY4");
+                displayEditDialog(changeTimeTextToInt(timeTV4.getText().toString()),timeTV4, WidgetProvider.TIME_KEY4);
                 break;
             default:
                 break;
@@ -128,7 +129,14 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
                 if (Integer.parseInt(hour)==0) timeTV.setText(minute+"m");
                 else if (Integer.parseInt(minute)==0) timeTV.setText(hour+"h");
                 else timeTV.setText(hour+"h "+minute+"m");
-                passTimeToWidget(hour+"h "+minute+"m",intentKey);
+//                passTimeToWidget(hour+"h "+minute+"m",intentKey);
+
+                SharedPreferences sharedPreferences = getSharedPreferences(WidgetProvider.PREF_TIME_KEY, Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString(intentKey, hour+"h "+minute+"m");
+                editor.commit();
+
+
                 editDialog.dismiss();
             }
         });
