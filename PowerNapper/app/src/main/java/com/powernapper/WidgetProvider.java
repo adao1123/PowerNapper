@@ -89,27 +89,10 @@ public class WidgetProvider extends AppWidgetProvider {
     @Override
     public void onReceive(Context context, Intent intent) {
         super.onReceive(context, intent);
-        Log.d(TAG, "onReceive: Hour " + hour1);
-        Log.d(TAG, "onReceive: Min " + min1);
+
 
         getSharedPreferences(context);
-
-        Log.d(TAG, "onReceive: Hour " + hour1);
-        Log.d(TAG, "onReceive: Min " + min1);
-
-
-//        String action = intent.getAction();
-//        Bundle extras = intent.getExtras();
-//        if(extras != null){
-//            String time1 = extras.getString("TIMEKEY1");
-//            int[] time = changeTimeTextToInt(time1);
-//            hour = time[0];
-//            min = time[1];
-//            Log.d(TAG, "onReceive: Hour " + hour);
-//            Log.d(TAG, "onReceive: Min " + min);
-//        }
-
-
+        
         if(MyOnClick.equals(intent.getAction())){
             Log.d(TAG, "Widget Expanded: " + widgetExpanded);
             // Updates App
