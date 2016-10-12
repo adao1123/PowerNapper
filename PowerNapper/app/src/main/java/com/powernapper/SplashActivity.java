@@ -185,7 +185,7 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
     }
     private void displayInitialTimes(){
         SharedPreferences sharedPreferences = getSharedPreferences(WidgetProvider.PREF_TIME_KEY, Context.MODE_PRIVATE);
-//        sharedPreferences.getString("TIMEKEY1",);
+        sharedPreferences.getString(WidgetProvider.TIME_KEY1,"15");
     }
 
 }
