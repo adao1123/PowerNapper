@@ -10,6 +10,40 @@
     android:id="@+id/splash_layout"
     android:background="@android:color/black"
     tools:context="com.powernapper.SplashActivity">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:layout_marginLeft="15dp"
+        android:layout_marginRight="15dp"
+        android:orientation="horizontal">
+        <TextView
+            android:id="@+id/titleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="60dp"
+            android:text="Power"
+            android:textColor="@color/blue_light"
+            />
+        <TextView
+            android:id="@+id/blinkingColon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=":"
+            android:textSize="60dp"
+            android:paddingBottom="15dp"
+            android:textColor="@color/blue_light"
+            android:textStyle="bold"/>
+        <TextView
+            android:id="@+id/titleText2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="60dp"
+            android:text="Napper"
+            android:textColor="@color/blue_light"
+            />
+    </LinearLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,7 +61,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="2h"
-                android:textColor="@color/blue_super_dark"
+                android:textColor="@color/blue_dark"
                 android:textStyle="bold"
                 android:gravity="center"
                 />
@@ -37,7 +71,7 @@
                 android:layout_width="60dp"
                 android:layout_centerInParent="true"
                 android:indeterminate="true"
-                android:indeterminateTint="@color/blue_super_dark"
+                android:indeterminateTint="@color/blue_dark"
                 android:indeterminateTintMode="src_in"
                 android:indeterminateDrawable="@drawable/my_progress_indeterminate"/>
         </LinearLayout>
@@ -52,7 +86,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="15m"
-                android:textColor="@color/blue_super_light"
+                android:textColor="@color/blue_super_super_light"
                 android:textStyle="bold"
                 android:gravity="center"
                 />
@@ -62,7 +96,7 @@
                 android:layout_width="60dp"
                 android:layout_centerInParent="true"
                 android:indeterminate="true"
-                android:indeterminateTint="@color/blue_super_light"
+                android:indeterminateTint="@color/blue_super_super_light"
                 android:indeterminateTintMode="src_in"
                 android:indeterminateDrawable="@drawable/my_progress_indeterminate"/>
         </LinearLayout>
@@ -74,7 +108,7 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_centerInParent="true"
-        android:src="@drawable/powernapper_icon_blue" />
+        android:src="@drawable/powernapper_icon_yellowblue" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -93,7 +127,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="1h"
-                android:textColor="@color/blue_dark"
+                android:textColor="@color/blue_light"
                 android:textStyle="bold"
                 android:gravity="center"
                 />
@@ -103,7 +137,7 @@
                 android:layout_width="60dp"
                 android:layout_centerInParent="true"
                 android:indeterminate="true"
-                android:indeterminateTint="@color/blue_dark"
+                android:indeterminateTint="@color/blue_light"
                 android:indeterminateTintMode="src_in"
                 android:indeterminateDrawable="@drawable/my_progress_indeterminate"/>
         </LinearLayout>
@@ -118,7 +152,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="30m"
-                android:textColor="@color/blue_light"
+                android:textColor="@color/blue_super_light"
                 android:textStyle="bold"
                 android:gravity="center"
                 />
@@ -128,7 +162,7 @@
                 android:layout_width="60dp"
                 android:layout_centerInParent="true"
                 android:indeterminate="true"
-                android:indeterminateTint="@color/blue_light"
+                android:indeterminateTint="@color/blue_super_light"
                 android:indeterminateTintMode="src_in"
                 android:indeterminateDrawable="@drawable/my_progress_indeterminate"/>
         </LinearLayout>
@@ -143,12 +177,12 @@
     </RelativeLayout>
 
     <TextView
-        android:textColor="#000493"
+        android:textColor="@color/blue_super_super_light"
         android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:paddingBottom="50dp"
-        android:text="Click on power nap length time to change"/>
+        android:text="Click on clock to set power nap length for widget"/>
 
 </RelativeLayout>
