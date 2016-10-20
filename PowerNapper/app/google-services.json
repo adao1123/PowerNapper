@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "841274166556",
+    "firebase_url": "https://powernapper-bbe59.firebaseio.com",
+    "project_id": "powernapper-bbe59",
+    "storage_bucket": "powernapper-bbe59.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:841274166556:android:844d9fbfb73c8066",
+        "android_client_info": {
+          "package_name": "com.powernapper"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "841274166556-4cb2jopo9ng55jhhcpo4n7gml2ftfdop.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.powernapper",
+            "certificate_hash": "640D845119BE77D03F71EFFCCACD53FD5604489F"
+          }
+        },
+        {
+          "client_id": "841274166556-06vk808k8qq4vb263aahd6f8lglh5hbm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCFTZGykd1AQk7yC8jcFXYBfS98V6lPbtI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "841274166556-06vk808k8qq4vb263aahd6f8lglh5hbm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

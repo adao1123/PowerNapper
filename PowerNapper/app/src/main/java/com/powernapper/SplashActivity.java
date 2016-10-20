@@ -6,10 +6,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Typeface;
 import android.content.SharedPreferences;
-import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.animation.AlphaAnimation;
@@ -18,9 +16,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
 
 
 public class SplashActivity extends AppCompatActivity implements View.OnClickListener{
@@ -39,6 +40,8 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
     private TextView timeTV3;
     private TextView timeTV4;
 
+    private AdView adView;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,6 +52,7 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
         displayInitialTimes();
         setEditListeners();
         createEditDialog();
+        loadAdBanner();
     }
 
     @Override
@@ -192,4 +196,39 @@ public class SplashActivity extends AppCompatActivity implements View.OnClickLis
         timeTV4.setText(sharedPreferences.getString(WidgetProvider.TIME_KEY4,"2h"));
     }
 
+    private void loadAdBanner(){
+        MobileAds.initialize(getApplicationContext(), "ca-app-pub-1428165692435282~7981421055");
+        adView = (AdView) findViewById(R.id.bannerAdView);
+        AdRequest adRequest = new AdRequest.Builder()
+                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR)
+                .build();
+        adView.loadAd(adRequest);
+    }
+
+    /** Called when leaving the activity */
+    @Override
+    public void onPause() {
+        if (adView != null) {
+            adView.pause();
+        }
+        super.onPause();
+    }
+
+    /** Called when returning to the activity */
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (adView != null) {
+            adView.resume();
+        }
+    }
+
+    /** Called before the activity is destroyed */
+    @Override
+    public void onDestroy() {
+        if (adView != null) {
+            adView.destroy();
+        }
+        super.onDestroy();
+    }
 }
