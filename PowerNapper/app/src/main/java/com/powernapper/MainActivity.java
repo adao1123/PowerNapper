@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -20,16 +19,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button oneButton;
     Button twoButton;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        initViews();
+        setListeners();
+    }
+
+    private void initViews(){
         halfButton = (Button)findViewById(R.id.halfButtonID);
         quarterButton = (Button)findViewById(R.id.quarterButtonID);
         oneButton = (Button)findViewById(R.id.oneButtonID);
         twoButton = (Button)findViewById(R.id.twoButtonID);
-        setListeners();
-
     }
 
     private void setListeners(){
@@ -58,6 +63,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         });
     }
+
 
     @Override
     public void onClick(View view) {
@@ -127,4 +133,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (format.equals("PM"))return true;
         return false;
     }
+
+
 }
